@@ -1,0 +1,43 @@
+server:
+  port: 8070
+
+spring:
+  config:
+    import: configserver:http://localhost:8071/
+  security:
+    user:
+      name: admin
+      password: password
+
+eureka:
+  server:
+    enable-self-preservation: true
+    # The server calculates the expected heartbeats per minute from all the registered clients
+    renewal-percent-threshold: 0.80
+    # tells the Eureka server to run a job at this frequency to evict the expired clients
+    eviction-interval-timer-in-ms: 60000
+  instance:
+    hostname: localhost
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      show-values: always
+    health:
+      probes:
+        enabled: true
+
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
