@@ -3,7 +3,7 @@ server:
 
 spring:
   config:
-    import: configserver:http://localhosttt:8071/
+    import: configserver:http://configserver:8071/
   security:
     user:
       name: admin
